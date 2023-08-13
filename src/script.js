@@ -32,6 +32,15 @@ dracoLoader.setDecoderPath('draco/')
 const gltfLoader = new GLTFLoader()
 gltfLoader.setDRACOLoader(dracoLoader)
 
+
+// loading the model 
+gltfLoader.load(
+    'Portal.glb', 
+    (gltf)=>
+    {
+        scene.add(gltf.scene)
+    }
+)
 /**
  * Object
  */
