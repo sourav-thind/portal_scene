@@ -32,24 +32,26 @@ dracoLoader.setDecoderPath('draco/')
 const gltfLoader = new GLTFLoader()
 gltfLoader.setDRACOLoader(dracoLoader)
 
+// Textures
+const bakedTexture = textureLoader.load('./BakedTexture.jpg');
+bakedTexture.flipY = false;
+bakedTexture.colorSpace = THREE.SRGBColorSpace;
+// Creating Material 
+const bakedMaterial = new THREE.MeshBasicMaterial({map : bakedTexture })
+
 
 // loading the model 
 gltfLoader.load(
     'Portal.glb', 
     (gltf)=>
     {
+        gltf.scene.traverse((child)=>
+        {
+            child.material = bakedMaterial
+        })
         scene.add(gltf.scene)
     }
 )
-/**
- * Object
- */
-const cube = new THREE.Mesh(
-    new THREE.BoxGeometry(1, 1, 1),
-    new THREE.MeshBasicMaterial()
-)
-
-scene.add(cube)
 
 /**
  * Sizes
