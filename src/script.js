@@ -39,6 +39,7 @@ bakedTexture.colorSpace = THREE.SRGBColorSpace;
 // Creating Material 
 const bakedMaterial = new THREE.MeshBasicMaterial({map : bakedTexture })
 
+const emissionMaterial = new THREE.MeshBasicMaterial({color: '#ffffff'})
 
 // loading the model 
 gltfLoader.load(
@@ -50,8 +51,13 @@ gltfLoader.load(
             child.material = bakedMaterial
         })
         scene.add(gltf.scene)
+        gltf.scene.children.find(child => child.name ==='PortalLight').material = emissionMaterial;
+        gltf.scene.children.find(child => child.name ==='PoleLight').material = emissionMaterial;
+        gltf.scene.children.find(child => child.name ==='PoleLight2').material = emissionMaterial;
+
     }
 )
+
 
 /**
  * Sizes
