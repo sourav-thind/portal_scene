@@ -34,13 +34,13 @@ const gltfLoader = new GLTFLoader()
 gltfLoader.setDRACOLoader(dracoLoader)
 
 // Textures
-const bakedTexture = textureLoader.load('./BakedTexture.jpg');
+const bakedTexture = textureLoader.load('./Final-Baking.png');
 bakedTexture.flipY = false;
 bakedTexture.colorSpace = THREE.SRGBColorSpace;
 // Creating Material 
 const bakedMaterial = new THREE.MeshBasicMaterial({map : bakedTexture })
 
-const emissionMaterial = new THREE.MeshBasicMaterial({color: '#ffffff'})
+const emissionMaterial = new THREE.MeshBasicMaterial({color: '#ffffff', side: THREE.DoubleSide})
 
 // loading the model 
 gltfLoader.load(
@@ -51,6 +51,7 @@ gltfLoader.load(
         {
             child.material = bakedMaterial
         })
+        // gltf.scene.children.find(child => child.name ==='Baked').material = bakedMaterial;
         scene.add(gltf.scene)
         gltf.scene.children.find(child => child.name ==='PortalLight').material = emissionMaterial;
         gltf.scene.children.find(child => child.name ==='PoleLight').material = emissionMaterial;
