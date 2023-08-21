@@ -5,6 +5,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
  import firefliesFragmentShader from './Shaders/FireFlies/fragment.glsl';
  import firefliesVertexShader from './Shaders/FireFlies/vertex.glsl';
+ import firefliesFragmentShader from './Shaders/Portal/fragment.glsl';
+ import firefliesVertexShader from './Shaders/Portal/vertex.glsl';
 
 /**
  * Base
