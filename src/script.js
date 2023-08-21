@@ -5,8 +5,9 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
  import firefliesFragmentShader from './Shaders/FireFlies/fragment.glsl';
  import firefliesVertexShader from './Shaders/FireFlies/vertex.glsl';
- import firefliesFragmentShader from './Shaders/Portal/fragment.glsl';
- import firefliesVertexShader from './Shaders/Portal/vertex.glsl';
+ import portalFragmentShader from './Shaders/Portal/fragment.glsl';
+ import portalVertexShader from './Shaders/Portal/vertex.glsl';
+
 
 /**
  * Base
@@ -40,10 +41,21 @@ gltfLoader.setDRACOLoader(dracoLoader)
 const bakedTexture = textureLoader.load('./Final-Baking.png');
 bakedTexture.flipY = false;
 bakedTexture.colorSpace = THREE.SRGBColorSpace;
+
 // Creating Material 
 const bakedMaterial = new THREE.MeshBasicMaterial({map : bakedTexture })
 
-const emissionMaterial = new THREE.MeshBasicMaterial({color: '#ffffff', side: THREE.DoubleSide})
+const emissionMaterial = new THREE.MeshBasicMaterial({color: '#ffffff'})
+
+const portalLightMaterial = new THREE.ShaderMaterial({
+    vertexShader: portalVertexShader, 
+    fragmentShader: portalFragmentShader, 
+    uniforms: {
+        uTime: {value: 0}
+    }
+   
+})
+
 
 // loading the model 
 gltfLoader.load(
@@ -56,7 +68,7 @@ gltfLoader.load(
         })
         // gltf.scene.children.find(child => child.name ==='Baked').material = bakedMaterial;
         scene.add(gltf.scene)
-        gltf.scene.children.find(child => child.name ==='PortalLight').material = emissionMaterial;
+        gltf.scene.children.find(child => child.name ==='PortalLight').material = portalLightMaterial;
         gltf.scene.children.find(child => child.name ==='PoleLight').material = emissionMaterial;
         gltf.scene.children.find(child => child.name ==='PoleLight2').material = emissionMaterial;
 
@@ -165,6 +177,7 @@ const tick = () =>
 
     //updaing the uTime
     firefliesMaterial.uniforms.uTime.value = elapsedTime;
+    portalLightMaterial.uniforms.uTime.value = elapsedTime;
 
     // Update controls
     controls.update()
