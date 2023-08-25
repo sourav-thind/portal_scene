@@ -50,8 +50,11 @@ const emissionMaterial = new THREE.MeshBasicMaterial({color: '#ffffff'})
 const portalLightMaterial = new THREE.ShaderMaterial({
     vertexShader: portalVertexShader, 
     fragmentShader: portalFragmentShader, 
+    side: THREE.DoubleSide,
     uniforms: {
-        uTime: {value: 0}
+        uTime: {value: 0},
+        uColorStart: {value: new THREE.Color(0xff0000)},
+        uColorEnd: {value: new THREE.Color(0xffffff)}
     }
    
 })
